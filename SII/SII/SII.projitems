@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>{D41B07AE-ECD1-4BD1-91ED-7F817621B3DF}</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>SII</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)App.xaml" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)MainPage.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Career.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Group.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Kardex.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Login.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Matter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\MenuOpcion.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Oportunity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\List.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Teacher.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Student.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Subjects.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Popup.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Settings\Settings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Splash\SplashPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\CuentaPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DashBoard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DataPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Fondo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Header.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\KardexPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\LoginPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\MenuDashBoard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\MenuDataOptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\MenuListView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\GroupsPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\SubjectsPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\SwipeGestureGrid.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebServices\WsGroups.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebServices\WsSubjects.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebServices\WsLogin.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebServices\WsKardex.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebServices\WsStudent.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Settings\" />
+  </ItemGroup>
+</Project>
