@@ -90,7 +90,8 @@ namespace SII.Views
                 }
             );*/
             Master = menuPage;
-            Detail = new NavigationPage(fondo);
+            DataPage data = new DataPage();
+            Detail = new NavigationPage(data);
         }
         private void NavigationTo(MenuOpcion item)
         {
@@ -107,6 +108,10 @@ namespace SII.Views
                             IsPresented = false;
                             break;
                         case "SubjectsPage":
+                            Detail = new NavigationPage(pagina);
+                            IsPresented = false;
+                            break;
+                        case "CalificationsPage":
                             Detail = new NavigationPage(pagina);
                             IsPresented = false;
                             break;

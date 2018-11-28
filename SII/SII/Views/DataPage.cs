@@ -29,7 +29,7 @@ namespace SII.Views
             createGUIAsync();
         }
 
-        private async Task createGUIAsync()
+        private void createGUIAsync()
         {
             btnLogin = new Button
             {
@@ -42,24 +42,28 @@ namespace SII.Views
             };
             btnLogin.Clicked += async (sender, e) =>
             {
-                var popup = new Popup();
-
-                var scaleAnimation = new ScaleAnimation
+                try
                 {
-                    PositionIn = MoveAnimationOptions.Top,
-                    PositionOut = MoveAnimationOptions.Bottom,
-                    ScaleIn = 1.2,
-                    ScaleOut = 0.8,
-                    DurationIn = 400,
-                    DurationOut = 800,
-                    EasingIn = Easing.BounceIn,
-                    EasingOut = Easing.CubicOut,
-                    HasBackgroundAnimation = false
-                };
+                    var popup = new UpdateDataPage();
 
-                popup.Animation = scaleAnimation;
+                    var scaleAnimation = new ScaleAnimation
+                    {
+                        PositionIn = MoveAnimationOptions.Top,
+                        PositionOut = MoveAnimationOptions.Bottom,
+                        ScaleIn = 1.2,
+                        ScaleOut = 0.8,
+                        DurationIn = 400,
+                        DurationOut = 800,
+                        EasingIn = Easing.BounceIn,
+                        EasingOut = Easing.CubicOut,
+                        HasBackgroundAnimation = false
+                    };
 
-                await PopupNavigation.PushAsync(popup);
+                    popup.Animation = scaleAnimation;
+
+                    await PopupNavigation.PushAsync(popup);
+                }
+                catch (Exception ex) { await DisplayAlert("", ex.StackTrace, "asda"); }
             };
             img = new Image
             {
@@ -129,7 +133,7 @@ namespace SII.Views
             {
                 Orientation = StackOrientation.Vertical,
                 HeightRequest = 500,
-                WidthRequest = 400,
+                WidthRequest = 700,
                 HorizontalOptions = LayoutOptions.Center,
                 Children =
             {
@@ -160,7 +164,7 @@ namespace SII.Views
 
         private async Task BtnLogin_CLickedAsync(object sender, EventArgs e)
         {
-
+           
         }
 
         protected override async void OnAppearing()

@@ -141,6 +141,7 @@ namespace SII.Views
                 {
                     DisplayAlert("Error", "Acceso denegado", "Aceptar");
                     aiIndicator.IsRunning = false;
+                    aiIndicator.IsVisible = false;
                 }
                 else
                 {
@@ -155,6 +156,8 @@ namespace SII.Views
                         Settings.UserName = null;
                     }
                     aiIndicator.IsRunning = false;
+                    aiIndicator.IsVisible = false;
+                    
                     DataPage dt = new DataPage();
                     
                     await Navigation.PushModalAsync(new DashBoard(new MenuOpcion()

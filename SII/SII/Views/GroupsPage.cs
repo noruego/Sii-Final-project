@@ -1,4 +1,5 @@
 ﻿using Rg.Plugins.Popup.Pages;
+using Rg.Plugins.Popup.Services;
 using SII.Models;
 using SII.WebServices;
 using System;
@@ -83,14 +84,14 @@ namespace SII.Views
             lb_seleccionar = new Label()
             {
                 HorizontalTextAlignment = TextAlignment.Center,
-                Text = "Agregar materia",
+                Text = "Terminar",
                 TextColor = Color.Gray,
                 FontFamily = "Roboto"
             };
             var tapr = new TapGestureRecognizer();
             tapr.Tapped += (sender, e) =>
             {
-                DisplayAlert("error", "selecciono inguno", "aceptar");
+                PopupNavigation.PopAsync();
                 //asignar ciertas carcateristicas de un tecnologico especifico
             };
             lb_maestro = new Label()

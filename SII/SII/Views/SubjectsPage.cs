@@ -22,11 +22,21 @@ namespace SII.Views
         private List<Subjects> list_kardex;
         private WsSubjects objWsSubject;
         private StackLayout st_inst;
+        private Boolean _isRefreshing = false;
 
         public SubjectsPage()
         {
             objWsSubject = new WsSubjects();
             createGUI();
+        }
+        public bool IsRefreshing
+        {
+            get { return _isRefreshing; }
+            set
+            {
+                _isRefreshing = value;
+                OnPropertyChanged(nameof(IsRefreshing));
+            }
         }
 
         private void createGUI()
@@ -55,17 +65,26 @@ namespace SII.Views
                 try
                 {
                     Subjects sub = (Subjects)e.SelectedItem;
-                     var resp = await DisplayAlert("Atención", "¿Desea eliminar materia?", "Aceptar", "Cancelar");
-                    
-                        if (await objWsSubject.delete(sub.group.idGroup))
-                        {
-                        list_kardex = await objWsSubject.getSubjects();
-                        lv_subjects.ItemsSource = list_kardex;
-                        DisplayAlert("Atención", "Materia eliminada", "Aceptar");
-                        }
-                        
-                    
-                    
+                    var popup = new SubjectPageOptions(sub);
+
+                    var scaleAnimation = new ScaleAnimation
+                    {
+                        PositionIn = MoveAnimationOptions.Top,
+                        PositionOut = MoveAnimationOptions.Bottom,
+                        ScaleIn = 1.2,
+                        ScaleOut = 0.8,
+                        DurationIn = 400,
+                        DurationOut = 800,
+                        EasingIn = Easing.BounceIn,
+                        EasingOut = Easing.CubicOut,
+                        HasBackgroundAnimation = false
+                    };
+
+                    popup.Animation = scaleAnimation;
+
+                    await PopupNavigation.PushAsync(popup);
+
+
 
                 }
                 catch (Exception ex) { await DisplayAlert("Alert", ex.ToString(), "Aceptar"); }
@@ -74,6 +93,13 @@ namespace SII.Views
                 //Agregar con settings 
                 // App.Current.MainPage = new DashBoard();
             };
+            lv_subjects.IsPullToRefreshEnabled = true;
+            lv_subjects.RefreshCommand = new Command(async()=> {
+                IsRefreshing = true;
+                list_kardex = await objWsSubject.getSubjects();
+                lv_subjects.ItemsSource = list_kardex;
+                lv_subjects.EndRefresh();
+            });
             bv_div = new BoxView()
             {
                 Color = Color.Green,

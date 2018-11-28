@@ -25,7 +25,7 @@ namespace SII.Views
             {
                 Title = "Calificaciones",
                 IconSource = "calification_icon.png",
-               // TargetType = typeof(InstitucionesPage),
+                TargetType = typeof(CalificationsPage),
             });
             this.Add(new MenuOpcion()
             {

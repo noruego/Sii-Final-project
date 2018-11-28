@@ -9,21 +9,21 @@ using Xamarin.Forms;
 
 namespace SII.Views
 { 
-    class KardexPage : ContentPage
+    class CalificationsPage : ContentPage
     {
         private ListView lv_kardex;
         private SearchBar sr_kardex;
         private ActivityIndicator ai_kardex;
-        private Label lb_nmateria, lb_oportunidad, lb_calificacion, lb_semestre;
+        private Label lb_nmateria, lb_calificacion1, lb_calificacion2, lb_calificacion3, lb_calificacion4, lb_promedio;
         private BoxView bv_div;
-        private List<Kardex> list_kardex;
-        private WsKardex objWskardex;
+        private List<Subjects> list_kardex;
+        private WsSubjects objWsSubject;
         private StackLayout st_inst;
         private ScrollView scv_hor;
 
-        public KardexPage()
+        public CalificationsPage()
         {
-            objWskardex = new WsKardex();
+            objWsSubject = new WsSubjects();
             createGUI();
             scv_hor = new ScrollView();
             scv_hor.Orientation = ScrollOrientation.Horizontal;
@@ -47,34 +47,10 @@ namespace SII.Views
             };
             sr_kardex.TextChanged += (sender, e) => buscarInstitucion(sr_kardex.Text);
 
-            DataTemplate celda = new DataTemplate(typeof(ImageCell));
-            celda.SetBinding(TextCell.TextProperty, "institution");
-            celda.SetValue(TextCell.TextColorProperty, Color.Gray);
-            celda.SetBinding(TextCell.DetailProperty, "short_name");
-            celda.SetValue(TextCell.TextColorProperty, Color.Blue);
-            celda.SetBinding(ImageCell.ImageSourceProperty, "logo");
-
             lv_kardex = new ListView();
             lv_kardex.HasUnevenRows = true;
-            lv_kardex.ItemTemplate = new DataTemplate(typeof(ResultCell));
+            lv_kardex.ItemTemplate = new DataTemplate(typeof(ResultCellCalifications));
 
-
-           
-            /*lv_kardex.ItemSelected += (sender, e) =>
-            {
-
-                Institucion objIns = (Institucion)e.SelectedItem;
-
-                Settings.Settings.institucionName = objIns.institution;
-                Settings.Settings.institucionShortName = objIns.short_name;
-                Settings.Settings.institucionLogo = objIns.logo;
-
-                DisplayAlert("Itemselected", Settings.Settings.institucionName + "\n" +
-                    Settings.Settings.institucionShortName + "\n"
-                    + Settings.Settings.institucionLogo + "\n", "Aceptar");
-                //Agregar con settings 
-                App.Current.MainPage = new DashBoard();
-            };*/
             bv_div = new BoxView()
             {
                 Color = Color.Green,
@@ -90,35 +66,46 @@ namespace SII.Views
                 TextColor = Color.Gray,
                 FontFamily = "Roboto"
             };
-            /* var tapr = new TapGestureRecognizer();
-             tapr.Tapped += (sender, e) =>
-             {
-                 DisplayAlert("error", "selecciono inguno", "aceptar");
-                 //asignar ciertas carcateristicas de un tecnologico especifico
-             };
-             lb_nmateria.GestureRecognizers.Add(tapr);
-             */
-            lb_oportunidad = new Label()
+           
+            lb_calificacion1 = new Label()
             {
                 HorizontalTextAlignment = TextAlignment.Center,
-                Text = "Oportunidad",
+                Text = "Calificacion 1",
                 TextColor = Color.Gray,
                 FontSize = 12,
                 FontFamily = "Roboto"
             };
-            lb_calificacion = new Label()
+            lb_calificacion2 = new Label()
             {
                 HorizontalTextAlignment = TextAlignment.Center,
-                Text = "Calificacion",
+                Text = "Calificacion 2",
                 FontAttributes = FontAttributes.Bold,
                 TextColor = Color.Gray,
                 FontSize = 12,
                 FontFamily = "Roboto"
             };
-            lb_semestre = new Label()
+            lb_calificacion3 = new Label()
             {
                 HorizontalTextAlignment = TextAlignment.Center,
-                Text = "Semestre",
+                Text = "Calificacion 3",
+                FontAttributes = FontAttributes.Bold,
+                TextColor = Color.Gray,
+                FontSize = 12,
+                FontFamily = "Roboto"
+            };
+            lb_calificacion4 = new Label()
+            {
+                HorizontalTextAlignment = TextAlignment.Center,
+                Text = "Calificacion 4",
+                FontAttributes = FontAttributes.Bold,
+                TextColor = Color.Gray,
+                FontSize = 12,
+                FontFamily = "Roboto"
+            };
+            lb_promedio = new Label()
+            {
+                HorizontalTextAlignment = TextAlignment.Center,
+                Text = "Promedio",
                 FontAttributes = FontAttributes.Bold,
                 TextColor = Color.Gray,
                 FontSize = 12,
@@ -137,7 +124,7 @@ namespace SII.Views
                     {
                         Orientation = StackOrientation.Horizontal,
                         Padding = new Thickness(20),
-                        Children ={ lb_nmateria,lb_oportunidad,lb_calificacion,lb_semestre}
+                        Children ={ lb_nmateria,lb_calificacion1,lb_calificacion2,lb_calificacion3,lb_calificacion4,lb_promedio}
                     },
                     lv_kardex,
                     bv_div,
@@ -156,7 +143,7 @@ namespace SII.Views
         {
             if (!string.IsNullOrWhiteSpace(institucion))
             {
-                lv_kardex.ItemsSource = list_kardex.Where(x => x.matter.name.ToLower().Contains(institucion.ToLower()));
+                lv_kardex.ItemsSource = list_kardex.Where(x => x.group.matter.name.ToLower().Contains(institucion.ToLower()));
             }
             else
             {
@@ -170,7 +157,7 @@ namespace SII.Views
 
             lv_kardex.IsVisible = false;
             ai_kardex.IsRunning = true;
-            list_kardex = await objWskardex.getKardex();
+            list_kardex = await objWsSubject.getSubjects();
             lv_kardex.ItemsSource = list_kardex;
             ai_kardex.IsRunning = false;
             ai_kardex.IsVisible = false;
@@ -195,9 +182,9 @@ namespace SII.Views
         }
 
     }
-    class ResultCell : ViewCell
+    class ResultCellCalifications : ViewCell
     {
-        public ResultCell()
+        public ResultCellCalifications()
         {
             int width = 150,heigh =35;
 
@@ -210,8 +197,8 @@ namespace SII.Views
                 TextColor = Color.Gray,
                 FontFamily = "Roboto"
             };
-            lblmateria.SetBinding(Label.TextProperty, "matter.name");
-            var lblOportunity = new Label
+            lblmateria.SetBinding(Label.TextProperty, "group.matter.name");
+            var lblcalificacion1 = new Label
             {
                 HorizontalTextAlignment = TextAlignment.Start,
                 FontSize = 14,
@@ -220,8 +207,8 @@ namespace SII.Views
                 TextColor = Color.Gray,
                 FontFamily = "Roboto"
             };
-            lblOportunity.SetBinding(Label.TextProperty, "oportunity.description");
-            var lblQualification = new Label
+            lblcalificacion1.SetBinding(Label.TextProperty, "calificacion1");
+            var lblcalificacion2 = new Label
             {
                 HorizontalTextAlignment = TextAlignment.Start,
                 FontSize = 14,
@@ -231,9 +218,31 @@ namespace SII.Views
                 FontFamily = "Roboto",
                 FontAttributes = FontAttributes.Bold
             };
-            lblQualification.SetBinding(Label.TextProperty, "qualification");
+            lblcalificacion2.SetBinding(Label.TextProperty, "calificacion2");
+            var lblcalificacion3 = new Label
+            {
+                HorizontalTextAlignment = TextAlignment.Start,
+                FontSize = 14,
+                HeightRequest = heigh,
+                WidthRequest = 80,
+                TextColor = Color.Gray,
+                FontFamily = "Roboto",
+                FontAttributes = FontAttributes.Bold
+            };
+            lblcalificacion3.SetBinding(Label.TextProperty, "calificacion3");
+            var lblcalificacion4 = new Label
+            {
+                HorizontalTextAlignment = TextAlignment.Start,
+                FontSize = 14,
+                HeightRequest = heigh,
+                WidthRequest = 80,
+                TextColor = Color.Gray,
+                FontFamily = "Roboto",
+                FontAttributes = FontAttributes.Bold
+            };
+            lblcalificacion4.SetBinding(Label.TextProperty, "calificacion4");
 
-            var lblSemester = new Label
+            var lblPromedio = new Label
             {
                 HorizontalTextAlignment = TextAlignment.Start,
                 FontSize = 14,
@@ -243,7 +252,7 @@ namespace SII.Views
                 FontFamily = "Roboto",
 
             };
-            lblSemester.SetBinding(Label.TextProperty, "semester");
+            lblPromedio.SetBinding(Label.TextProperty, "promedio");
 
             var stackList = new StackLayout
             {
@@ -254,27 +263,13 @@ namespace SII.Views
                 Children =
                 {
                     lblmateria,
-                    lblOportunity,
-                    lblQualification,
-                    lblSemester
+                    lblcalificacion1,
+                    lblcalificacion2,
+                    lblcalificacion3,
+                    lblcalificacion4,
+                    lblPromedio
                 }
             };
-        var moreAction = new MenuItem { Text = "More" };
-        moreAction.SetBinding (MenuItem.CommandParameterProperty, new Binding ("."));
-        moreAction.Clicked += async (sender, e) => {
-            var mi = ((MenuItem)sender);
-            Debug.WriteLine("More Context Action clicked: " + mi.CommandParameter);
-        };
-
-        var deleteAction = new MenuItem { Text = "Delete", IsDestructive = true }; // red background
-        deleteAction.SetBinding (MenuItem.CommandParameterProperty, new Binding ("."));
-        deleteAction.Clicked += async (sender, e) => {
-            var mi = ((MenuItem)sender);
-            Debug.WriteLine("Delete Context Action clicked: " + mi.CommandParameter);
-        };
-        // add to the ViewCell's ContextActions property
-        ContextActions.Add (moreAction);
-        ContextActions.Add (deleteAction);
             View = stackList;
         }
        
