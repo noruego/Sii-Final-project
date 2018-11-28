@@ -6,8 +6,10 @@ namespace SII.Models
 {
     class Login
     {
-        public  String name { get; set; }
+        public String iduser;
+        public  String username { get; set; }
         public  String token { get; set; }
+        public String password { get; set; }
         public  String idestudent { get; set; }
     }
 }

@@ -16,6 +16,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ICorreo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -30,7 +31,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Teacher.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Student.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Subjects.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Popup.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Servivios\ServiciosCorreo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\CalificationsPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\SubjectPageOptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UpdateDataPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Settings\Settings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Splash\SplashPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\CuentaPage.cs" />
@@ -53,6 +57,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)WebServices\WsStudent.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)NewFolder\" />
     <Folder Include="$(MSBuildThisFileDirectory)Settings\" />
   </ItemGroup>
 </Project>

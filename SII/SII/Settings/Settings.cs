@@ -18,6 +18,11 @@ namespace SII
             get => AppSettings.GetValueOrDefault(nameof(UserName), string.Empty);
             set => AppSettings.AddOrUpdateValue(nameof(UserName), value);
         }
+        public static string iduser
+        {
+            get => AppSettings.GetValueOrDefault(nameof(iduser), string.Empty);
+            set => AppSettings.AddOrUpdateValue(nameof(iduser), value);
+        }
         public static String token
         {
             get => AppSettings.GetValueOrDefault(nameof(token), string.Empty);

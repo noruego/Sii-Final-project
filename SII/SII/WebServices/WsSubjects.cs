@@ -39,6 +39,11 @@ namespace SII.WebServices
                     subject.student = institucion["student"].ToObject<Student>();
                     subject.period = institucion["periodo"].ToString();
                     subject.group = institucion["group"].ToObject<Group>();
+                    subject.calificacion1 = Int32.Parse(institucion["calificacion1"].ToString());
+                    subject.calificacion2 = Int32.Parse(institucion["calificacion2"].ToString());
+                    subject.calificacion3 = Int32.Parse(institucion["calificacion3"].ToString());
+                    subject.calificacion4 = Int32.Parse(institucion["calificacion4"].ToString());
+                    subject.calificacion4 = (subject.calificacion1+subject.calificacion2+subject.calificacion3+subject.calificacion4)/4;
                     listSubjects.Add(subject);
                 }
             }

@@ -16,7 +16,7 @@ namespace SII.WebServices
 
         public async Task<String> conexion(String user, String pwd)
         {
-            Settings.ip = "http://192.168.1.98:8080";
+            Settings.ip = "http://192.168.100.126:8080";
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(Settings.ip);
             var authData = string.Format("{0}:{1}", "root", "root");
@@ -30,6 +30,7 @@ namespace SII.WebServices
                 login = JsonConvert.DeserializeObject<Login>(json);
                 Settings.token = login.token;
                 Settings.idStudent = login.idestudent;
+                Settings.iduser = login.iduser;
                 /*
                 student = await objWsStu.getStudent();
                 Settings.user_name=student.name+" "+student.father_lastname + " "+student.mother_lastname;
@@ -39,6 +40,38 @@ namespace SII.WebServices
 
             }
             return login.token;
+        }
+        public async Task<Boolean> update(String pass,String username)
+        {
+            Boolean flag = false;
+            try
+            {
+
+                Login log = new Login();
+                log.username = username;
+                log.password = pass;
+                log.iduser = Settings.iduser;
+                var json = JsonConvert.SerializeObject(log);
+                
+                HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                HttpClient httpClient = new HttpClient();
+                httpClient.BaseAddress = new Uri(Settings.ip);
+                var authData = string.Format("{0}:{1}", "root", "root");
+                var authHeaderValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(authData));
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeaderValue);
+
+                var resp = await httpClient.PutAsync("SIIWS_PATM/api/wsuser/putuser/" + Settings.token, content);
+                if (resp.IsSuccessStatusCode)
+                    flag = true;
+            }
+            catch (Exception e)
+            {
+
+                e.ToString();
+            }
+
+            return flag;
         }
     }
 }
